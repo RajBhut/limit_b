@@ -1,6 +1,7 @@
 import express, { Router } from 'express';
 import multer from 'multer';
-import { v2 as cloudinary } from 'cloudinary';
+import pkg from 'cloudinary';
+const { v2: cloudinary } = pkg;
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -17,7 +18,7 @@ const storage = new CloudinaryStorage({
   params:   {
     folder: 'personal',
     format:  'png', 
-    public_id:  (req, file)   => file.originalname,
+   public_id:  (req, file)   => file.originalname,
   },
 });
 
