@@ -31,10 +31,17 @@ io.on("connection", (socket) => {
     delete clients[socket.id];
     io.emit("updateClients", Object.values(clients));
   });
+  socket.on("typing" , (data)=>{
+    socket.broadcast.to(data.room).emit("typing")
+  })
 
   socket.on("personal msg", (data) => {
-    socket.broadcast.to(data.room).emit("personal msg", data.message);
-    console.log(data.message);
+
+      data.sender = 'you';
+    
+    socket.broadcast.to(data.room).emit("personal msg", {chat : data.message.chat , sender : 'you' , time : data.message.time});
+   
+   
   });
 });
 
